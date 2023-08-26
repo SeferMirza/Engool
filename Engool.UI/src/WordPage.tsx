@@ -11,6 +11,8 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import NoConnection from '../components/NoConnection';
+
 type Word = {
   engSection: {
     engWordText: string;
@@ -28,6 +30,7 @@ type Word = {
 
 function WordPage(): JSX.Element {
   const [isLoading, setLoading] = useState(true);
+  const [noConnection, setNoConnection] = useState(false);
 
   const [data, setData] = useState<Word>({
     engSection: {
@@ -65,7 +68,9 @@ function WordPage(): JSX.Element {
       };
 
       setData(datas);
+      setNoConnection(false);
     } catch (error) {
+      setNoConnection(true);
       console.error(error);
     } finally {
       setLoading(false);
@@ -80,12 +85,16 @@ function WordPage(): JSX.Element {
     getWord();
   }
 
-  function Next() {}
+  function Next() {
+    getWord();
+  }
 
   return (
     <View style={styles.container}>
       {isLoading ? (
         <ActivityIndicator />
+      ) : noConnection ? (
+        <NoConnection />
       ) : (
         <View style={styles.column}>
           <View style={styles.engWordBox}>
