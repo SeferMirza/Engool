@@ -10,6 +10,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import Config from "react-native-config";
 
 import NoConnection from '../components/NoConnection';
 
@@ -49,7 +50,7 @@ function WordPage(): JSX.Element {
 
   const getWord = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5177/words/single');
+      const response = await fetch(`${Config.SERVICE_URL}/words/single`);
       const json = await response.json();
 
       const datas: Word = {
