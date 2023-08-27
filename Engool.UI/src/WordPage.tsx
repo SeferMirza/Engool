@@ -13,6 +13,8 @@ import {
 import Config from 'react-native-config';
 
 import NoConnection from '../components/NoConnection';
+import TopBar from '../components/TopBar';
+import Menus from '../components/Menus';
 
 type Word = {
   id: string;
@@ -101,6 +103,9 @@ function WordPage(): JSX.Element {
         <NoConnection />
       ) : (
         <View style={styles.column}>
+          <TopBar>
+            <Menus />
+          </TopBar>
           <View style={styles.engWordBox}>
             <View style={styles.engWord}>
               <Text style={styles.engWordText}>
