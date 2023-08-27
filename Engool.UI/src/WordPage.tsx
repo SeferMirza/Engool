@@ -15,6 +15,7 @@ import Config from 'react-native-config';
 import NoConnection from '../components/NoConnection';
 
 type Word = {
+  id: string;
   engSection: {
     engWordText: string;
     engSentenceText: string;
@@ -34,6 +35,7 @@ function WordPage(): JSX.Element {
   const [noConnection, setNoConnection] = useState(false);
 
   const [data, setData] = useState<Word>({
+    id: '',
     engSection: {
       engWordText: '',
       engSentenceText: '',
@@ -54,6 +56,7 @@ function WordPage(): JSX.Element {
       const json = await response.json();
 
       const datas: Word = {
+        id: json.id,
         engSection: {
           engWordText: json.engText,
           engSentenceText: json.engSentence,
