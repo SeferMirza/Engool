@@ -41,4 +41,13 @@ public class WordController
 
         return target.With(request.EngText, request.TrText, request.EngSentence, request.TrSentence);
     }
+
+    [HttpDelete]
+    [Route("words")]
+    public void Delete(Guid id)
+    {
+        var target = _serviceProvider.GetRequiredService<Words>();
+
+        target.GetWordById(id).Delete();
+    }
 }
