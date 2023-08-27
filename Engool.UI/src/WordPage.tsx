@@ -50,7 +50,7 @@ function WordPage(): JSX.Element {
 
   const getWord = async () => {
     try {
-      const response = await fetch(`${Config.SERVICE_URL}/words/single`);
+      const response = await fetch(`${Config.SERVICE_LOCAL_URL}/words/single`);
       const json = await response.json();
 
       const datas: Word = {
