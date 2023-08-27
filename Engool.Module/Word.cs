@@ -15,26 +15,36 @@ public class Word
     public virtual string EngText { get; protected set; } = default!;
     public virtual string TrSentence { get; protected set; } = default!;
     public virtual string TrText { get; protected set; } = default!;
+    public virtual bool IsDeleted { get; protected set; } = default!;
 
     public virtual Word With(string engText, string trText, string engSentence, string trSentence)
     {
-        Set(engText, trText, engSentence, trSentence);
+        Set(engText, trText, engSentence, trSentence, isDeleted: false);
 
         return _context.Insert(this);
     }
 
-    public virtual async Task Update(string engText, string trText, string engSentence, string trSentence) => 
-        Set(engText, trText, engSentence, trSentence);
+    public virtual async Task Update(string engText, string trText, string engSentence, string trSentence) =>
+        Set(engText, trText, engSentence, trSentence, IsDeleted);
 
-    protected virtual void Set(string engText, string trText, string engSentence, string trSentence)
+    protected virtual void Set(string engText, string trText, string engSentence, string trSentence, bool isDeleted)
     {
         EngText = engText;
         TrText = trText;
         EngSentence = engSentence;
         TrSentence = trSentence;
+        IsDeleted = isDeleted;
     }
 
-    public virtual void Delete() => _context.Delete(this);
+    public virtual void ForceDelete() => _context.Delete(this);
+    public virtual void Delete() =>
+        Set(
+            engText: EngText,
+            trText: TrText,
+            engSentence: EngSentence,
+            trSentence: TrSentence,
+            isDeleted: true
+        );
 }
 
 public class Words
@@ -44,6 +54,7 @@ public class Words
     public Words(IQueryContext<Word> context) =>
         _context = context;
 
-    public Word GetWord() => _context.All().FirstOrDefault();
-    public List<Word> GetWords() => _context.All();
+    public Word GetWordById(Guid id) => _context.All(w => w.IsDeleted == false && w.Id == id).FirstOrDefault();
+    public Word GetWord() => _context.All(w => w.IsDeleted == false).FirstOrDefault();
+    public List<Word> GetWords() => _context.All(w => w.IsDeleted == false);
 }

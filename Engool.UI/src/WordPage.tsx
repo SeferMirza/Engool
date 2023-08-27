@@ -10,7 +10,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import Config from "react-native-config";
+import Config from 'react-native-config';
 
 import NoConnection from '../components/NoConnection';
 
