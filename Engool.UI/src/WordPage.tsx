@@ -13,8 +13,11 @@ import {
 import Config from 'react-native-config';
 
 import NoConnection from '../components/NoConnection';
+import TopBar from '../components/TopBar';
+import Menus from '../components/Menus';
 
 type Word = {
+  id: string;
   engSection: {
     engWordText: string;
     engSentenceText: string;
@@ -34,6 +37,7 @@ function WordPage(): JSX.Element {
   const [noConnection, setNoConnection] = useState(false);
 
   const [data, setData] = useState<Word>({
+    id: '',
     engSection: {
       engWordText: '',
       engSentenceText: '',
@@ -50,10 +54,12 @@ function WordPage(): JSX.Element {
 
   const getWord = async () => {
     try {
+      setLoading(true);
       const response = await fetch(`${Config.SERVICE_LOCAL_URL}/words/single`);
       const json = await response.json();
 
       const datas: Word = {
+        id: json.id,
         engSection: {
           engWordText: json.engText,
           engSentenceText: json.engSentence,
@@ -91,13 +97,16 @@ function WordPage(): JSX.Element {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={layoutStyles.container}>
       {isLoading ? (
         <ActivityIndicator />
-      ) : noConnection ? (
+      ) : noConnection && !__DEV__ ? (
         <NoConnection />
       ) : (
-        <View style={styles.column}>
+        <View style={layoutStyles.column}>
+          <TopBar>
+            <Menus />
+          </TopBar>
           <View style={styles.engWordBox}>
             <View style={styles.engWord}>
               <Text style={styles.engWordText}>
@@ -138,11 +147,8 @@ function WordPage(): JSX.Element {
   );
 }
 
+const layoutStyles = require('../styles/layout');
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
   engWordBox: {
     flex: 6,
     justifyContent: 'center',
@@ -195,11 +201,6 @@ const styles = StyleSheet.create({
   buttonsText: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  row: {},
-  column: {
-    flex: 1,
-    flexDirection: 'column',
   },
 });
 
