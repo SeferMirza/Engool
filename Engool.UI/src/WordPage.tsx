@@ -54,6 +54,7 @@ function WordPage(): JSX.Element {
 
   const getWord = async () => {
     try {
+      setLoading(true);
       const response = await fetch(`${Config.SERVICE_LOCAL_URL}/words/single`);
       const json = await response.json();
 
@@ -96,13 +97,13 @@ function WordPage(): JSX.Element {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={layoutStyles.container}>
       {isLoading ? (
         <ActivityIndicator />
-      ) : noConnection ? (
+      ) : noConnection && !__DEV__ ? (
         <NoConnection />
       ) : (
-        <View style={styles.column}>
+        <View style={layoutStyles.column}>
           <TopBar>
             <Menus />
           </TopBar>
@@ -146,11 +147,8 @@ function WordPage(): JSX.Element {
   );
 }
 
+const layoutStyles = require('../styles/layout');
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
   engWordBox: {
     flex: 6,
     justifyContent: 'center',
@@ -203,11 +201,6 @@ const styles = StyleSheet.create({
   buttonsText: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  row: {},
-  column: {
-    flex: 1,
-    flexDirection: 'column',
   },
 });
 
