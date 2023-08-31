@@ -1,4 +1,4 @@
-import {Word} from '../types';
+import {Word, OnlyWord} from '../types';
 import Config from 'react-native-config';
 
 const getWord = async () => {
@@ -42,10 +42,14 @@ const deleteWord = async (id: string) => {
   }
 };
 
-const postWord = async (word: Word) => {
+const postWord = async (word: OnlyWord) => {
   try {
     await fetch(`${Config.SERVICE_LOCAL_URL}/words`, {
       method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(word),
     });
   } catch (error: any) {

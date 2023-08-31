@@ -10,11 +10,12 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {getWord} from '../utils/requests';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
+
+import {getWord} from '../utils/requests';
 
 import {Word} from '../types';
 

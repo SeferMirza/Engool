@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Text} from 'react-native';
 import {
   Menu,
   Box,
@@ -8,7 +8,22 @@ import {
   NativeBaseProvider,
 } from 'native-base';
 
+import {postWord} from '../utils/requests';
+
 function Menus(): JSX.Element {
+  const addWord = async () => {
+    try {
+      postWord({
+        engText: 'Game',
+        trText: 'Oyun',
+        engSentence: 'I want to play game',
+        trSentence: 'Oyun oynamak istiyorum',
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <NativeBaseProvider>
@@ -27,7 +42,11 @@ function Menus(): JSX.Element {
             }}>
             <Menu.Item>Practice</Menu.Item>
             <Menu.Item>Statistics</Menu.Item>
-            <Menu.Item>Add New</Menu.Item>
+            <Menu.Item>
+              <TouchableOpacity onPressOut={addWord}>
+                <Text>Add New Word</Text>
+              </TouchableOpacity>
+            </Menu.Item>
           </Menu>
         </Box>
       </NativeBaseProvider>

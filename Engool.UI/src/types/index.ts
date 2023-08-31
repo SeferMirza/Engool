@@ -14,4 +14,11 @@ type Word = {
   };
 };
 
-export type {Word};
+type OnlyWord = {
+  engText: string;
+  engSentence: string;
+  trText: string;
+  trSentence: string;
+};
+
+export type {Word, OnlyWord};
