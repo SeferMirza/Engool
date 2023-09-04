@@ -9,6 +9,7 @@ import {
 } from 'native-base';
 
 import {postWord} from '../utils/requests';
+import NewWord from './NewWord';
 
 function Menus(): JSX.Element {
   const addWord = async () => {
@@ -43,9 +44,7 @@ function Menus(): JSX.Element {
             <Menu.Item>Practice</Menu.Item>
             <Menu.Item>Statistics</Menu.Item>
             <Menu.Item>
-              <TouchableOpacity onPressOut={addWord}>
-                <Text>Add New Word</Text>
-              </TouchableOpacity>
+              <NewWord />
             </Menu.Item>
           </Menu>
         </Box>
