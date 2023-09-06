@@ -7,3 +7,4 @@
 - [ ] statistics page
   - [ ] keep statistics data on db
 - [ ] profile page
+- [ ] first stage turkish word hidden
