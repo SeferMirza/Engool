@@ -5,7 +5,10 @@ module.exports = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFFFFF',
     },
-    row: {},
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     column: {
       flex: 1,
       flexDirection: 'column',

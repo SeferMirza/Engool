@@ -10,27 +10,14 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import Config from 'react-native-config';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
 
-type Word = {
-  id: string;
-  engSection: {
-    engWordText: string;
-    engSentenceText: string;
-  };
-  trSection: {
-    trWordText: string;
-    trSentenceText: string;
-  };
-  buttonSection: {
-    againButtonText: string;
-    okayButtonText: string;
-  };
-};
+import {getWord} from '../utils/requests';
+
+import {Word} from '../types';
 
 function WordPage(): JSX.Element {
   const [isLoading, setLoading] = useState(true);
@@ -52,27 +39,11 @@ function WordPage(): JSX.Element {
     },
   });
 
-  const getWord = async () => {
+  const word = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${Config.SERVICE_LOCAL_URL}/words/single`);
-      const json = await response.json();
 
-      const datas: Word = {
-        id: json.id,
-        engSection: {
-          engWordText: json.engText,
-          engSentenceText: json.engSentence,
-        },
-        trSection: {
-          trWordText: json.trText,
-          trSentenceText: json.trSentence,
-        },
-        buttonSection: {
-          againButtonText: 'Tekrar',
-          okayButtonText: 'Öğrendim',
-        },
-      };
+      const datas: Word = await getWord();
 
       setData(datas);
       setNoConnection(false);
@@ -85,15 +56,15 @@ function WordPage(): JSX.Element {
   };
 
   useEffect(() => {
-    getWord();
+    word();
   }, []);
 
   function Again() {
-    getWord();
+    word();
   }
 
   function Next() {
-    getWord();
+    word();
   }
 
   return (

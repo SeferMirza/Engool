@@ -8,6 +8,8 @@ import {
   NativeBaseProvider,
 } from 'native-base';
 
+import NewWord from './modals/NewWord';
+
 function Menus(): JSX.Element {
   return (
     <View style={styles.container}>
@@ -27,7 +29,9 @@ function Menus(): JSX.Element {
             }}>
             <Menu.Item>Practice</Menu.Item>
             <Menu.Item>Statistics</Menu.Item>
-            <Menu.Item>Add New</Menu.Item>
+            <Menu.Item>
+              <NewWord />
+            </Menu.Item>
           </Menu>
         </Box>
       </NativeBaseProvider>
