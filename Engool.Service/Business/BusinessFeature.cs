@@ -12,6 +12,7 @@ public class BusinessFeature : IFeature
         configurator.ConfigureServiceCollection(services =>
         {
             services.AddTransientWithFactory<Word>();
+            services.AddTransientWithFactory<Initiator>();
             services.AddTransientWithFactory<Sentence>();
             services.AddSingleton<Words>();
             services.AddSingleton<Sentencies>();
