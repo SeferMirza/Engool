@@ -1,5 +1,4 @@
-﻿using Do.Database;
-using Do.Orm;
+﻿using Do.Orm;
 
 namespace Engool.Module;
 
@@ -12,22 +11,22 @@ public class Sentence
         (_context) = (context);
 
     public virtual Guid Id { get; protected set; } = default!;
-    public virtual string SentenceText { get; protected set; } = default!;
-    public virtual Lang Lang { get; protected set; } = default!;
+    public virtual string EngText { get; protected set; } = default!;
+    public virtual string TrText { get; protected set; } = default!;
 
-    public virtual Sentence With(string sentenceText, Lang lang)
+    public virtual Sentence With(string engText, string trText)
     {
-        Set(sentenceText, lang);
+        Set(engText, trText);
 
         return _context.Insert(this);
     }
 
-    public virtual async Task Update(string sentenceText, Lang lang) => Set(sentenceText, lang);
+    public virtual async Task Update(string engText, string trText) => Set(engText, trText);
 
-    protected virtual void Set(string sentenceText, Lang lang)
+    protected virtual void Set(string engText, string trText)
     {
-        SentenceText = sentenceText;
-        Lang = lang;
+        EngText = engText;
+        TrText = trText;
     }
 
     public virtual void Delete() => _context.Delete(this);

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="InitialSentences.json" />
     <Content Remove="InitialWords.json" />
   </ItemGroup>
 
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="InitialSentences.json" />
     <Resource Include="InitialWords.json" />
   </ItemGroup>
 

@@ -69,7 +69,6 @@ public class Words
             w.EngSentence == engSentence &&
             w.TrSentence == trSentence
         );
-
     public Word GetWordById(Guid id) => _context.All(w => w.IsDeleted == false && w.Id == id).FirstOrDefault();
     public Word GetWord() => _context.All(w => w.IsDeleted == false).FirstOrDefault();
     public List<Word> GetWords() => _context.All(w => w.IsDeleted == false);
