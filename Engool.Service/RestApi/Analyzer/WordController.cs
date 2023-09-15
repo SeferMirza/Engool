@@ -53,10 +53,10 @@ public class WordController
 
     [HttpGet]
     [Route("words/initialize")]
-    public void InitializeWord()
+    public void InitializeWord([FromQuery] int? take = null)
     {
         var target = _serviceProvider.GetRequiredService<Initiator>();
 
-        target.InitializeWord();
+        target.InitializeWords(take);
     }
 }

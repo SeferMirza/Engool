@@ -1,5 +1,4 @@
 ﻿using Do.Orm;
-using System.Reflection;
 
 namespace Engool.Module;
 
@@ -61,7 +60,7 @@ public class Words
     public Words(IQueryContext<Word> context) =>
         _context = context;
 
-    public Word GetWord(string eng, string tr, string engSentence, string trSentence) =>
+    public Word? GetWord(string eng, string tr, string engSentence, string trSentence) =>
         _context.SingleBy(w => 
             w.IsDeleted == false && 
             w.EngText == eng && 
