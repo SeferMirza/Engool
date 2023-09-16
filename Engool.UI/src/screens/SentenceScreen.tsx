@@ -15,35 +15,28 @@ import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
 
-import {getWord} from '../utils/requests';
+import {getSentence} from '../utils/requests';
 
-import {Word} from '../types';
+import {Sentence} from '../types';
 
-function WordPage(): JSX.Element {
+function SentenceScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [noConnection, setNoConnection] = useState(false);
-
-  const [data, setData] = useState<Word>({
+  const [data, setData] = useState<Sentence>({
     id: '',
     engSection: {
-      engWordText: '',
-      engSentenceText: '',
+      engSentence: '',
     },
     trSection: {
-      trWordText: '',
-      trSentenceText: '',
-    },
-    buttonSection: {
-      againButtonText: 'Tekrar',
-      okayButtonText: 'Öğrendim',
+      trSentence: '',
     },
   });
 
-  const word = async () => {
+  const sentence = async () => {
     try {
       setLoading(true);
 
-      const datas: Word = await getWord();
+      const datas: Sentence = await getSentence();
 
       setData(datas);
       setNoConnection(false);
@@ -56,15 +49,15 @@ function WordPage(): JSX.Element {
   };
 
   useEffect(() => {
-    word();
+    sentence();
   }, []);
 
   function Again() {
-    word();
+    sentence();
   }
 
   function Next() {
-    word();
+    sentence();
   }
 
   return (
@@ -76,40 +69,28 @@ function WordPage(): JSX.Element {
       ) : (
         <View style={layoutStyles.column}>
           <TopBar>
-            <Menus />
+            <Menus navigation={navigation} />
           </TopBar>
-          <View style={styles.engWordBox}>
-            <View style={styles.engWord}>
-              <Text style={styles.engWordText}>
-                {data.engSection.engWordText}
-              </Text>
-            </View>
+          <View style={layoutStyles.mainContent}>
             <View style={styles.engSentence}>
-              <Text style={styles.engSentenceText}>
-                {data.engSection.engSentenceText}
+              <Text style={layoutStyles.mainContentText}>
+                {data.engSection.engSentence}
               </Text>
             </View>
           </View>
           <View style={styles.trWordBox}>
-            <View style={styles.trWord}>
-              <Text style={styles.trWordText}>{data.trSection.trWordText}</Text>
-            </View>
             <View style={styles.trSentence}>
               <Text style={styles.trSentenceText}>
-                {data.trSection.trSentenceText}
+                {data.trSection.trSentence}
               </Text>
             </View>
           </View>
           <View style={styles.bottomButtoms}>
             <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <Text style={styles.buttonsText}>
-                {data.buttonSection.againButtonText}
-              </Text>
+              <Text style={styles.buttonsText}>Tekrar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <Text style={styles.buttonsText}>
-                {data.buttonSection.okayButtonText}
-              </Text>
+              <Text style={styles.buttonsText}>Öğrendim</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -175,4 +156,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WordPage;
+export default SentenceScreen;

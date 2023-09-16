@@ -5,7 +5,7 @@ namespace Engool.Module;
 public class Sentence
 {
     readonly IEntityContext<Sentence> _context = default!;
-    readonly Sentences _sentences;
+    readonly Sentences _sentences = default!;
 
     protected Sentence() { }
     public Sentence(IEntityContext<Sentence> context, Sentences sentences)
