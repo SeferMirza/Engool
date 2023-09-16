@@ -21,6 +21,7 @@ module.exports = StyleSheet.create({
   mainContentText: {
     fontSize: 50,
     fontWeight: 'bold',
+    flexShrink: 1,
   },
   translationMeaningContent: {
     flex: 3,

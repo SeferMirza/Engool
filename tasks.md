@@ -7,7 +7,7 @@
 - [ ] statistics page
   - [ ] keep statistics data on db
 - [ ] profile page
-- [ ] first stage turkish word hidden
+- [X] first stage turkish word hidden
 - [ ] local store (ui)
 - [X] service, find word library on net
 - [X] itialize words and sentences from local to db
