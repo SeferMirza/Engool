@@ -4,11 +4,15 @@ namespace Engool.Module;
 
 public class Word
 {
-    readonly IEntityContext<Word> _context = default!;
+    IEntityContext<Word> _context = default!;
+    Words _words;
 
     protected Word() { }
-    public Word(IEntityContext<Word> context) =>
-        (_context) = (context);
+    public Word(IEntityContext<Word> context, Words words)
+    {
+        _context = context;
+        _words = words;
+    }
 
     public virtual Guid Id { get; protected set; } = default!;
     public virtual string EngSentence { get; protected set; } = default!;
@@ -19,6 +23,8 @@ public class Word
 
     public virtual Word With(string engText, string trText, string engSentence, string trSentence)
     {
+        if(_words.GetWord(engText, trText, engSentence, trSentence) is not null) { return this; }
+
         Set(engText, trText, engSentence, trSentence, isDeleted: false);
 
         return _context.Insert(this);
@@ -54,6 +60,14 @@ public class Words
     public Words(IQueryContext<Word> context) =>
         _context = context;
 
+    public Word? GetWord(string eng, string tr, string engSentence, string trSentence) =>
+        _context.SingleBy(w => 
+            w.IsDeleted == false && 
+            w.EngText == eng && 
+            w.TrText == tr && 
+            w.EngSentence == engSentence &&
+            w.TrSentence == trSentence
+        );
     public Word GetWordById(Guid id) => _context.All(w => w.IsDeleted == false && w.Id == id).FirstOrDefault();
     public Word GetWord() => _context.All(w => w.IsDeleted == false).FirstOrDefault();
     public List<Word> GetWords() => _context.All(w => w.IsDeleted == false);

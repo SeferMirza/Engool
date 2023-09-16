@@ -14,6 +14,16 @@ type Word = {
   };
 };
 
+type Sentence = {
+  id: string;
+  engSection: {
+    engSentence: string;
+  };
+  trSection: {
+    trSentence: string;
+  };
+};
+
 type OnlyWord = {
   engText: string;
   engSentence: string;
@@ -21,4 +31,9 @@ type OnlyWord = {
   trSentence: string;
 };
 
-export type {Word, OnlyWord};
+type OnlySentence = {
+  engSentence: string;
+  trSentence: string;
+};
+
+export type {Word, Sentence, OnlyWord, OnlySentence};

@@ -7,11 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="InitialSentences.json" />
+    <Content Remove="InitialWords.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="do-blueprints-service-application" Version="0.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Engool.Module\Engool.Module.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="InitialSentences.json" />
+    <Resource Include="InitialWords.json" />
   </ItemGroup>
 
 </Project>

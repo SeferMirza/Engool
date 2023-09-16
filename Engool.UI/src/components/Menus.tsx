@@ -8,9 +8,7 @@ import {
   NativeBaseProvider,
 } from 'native-base';
 
-import NewWord from './modals/NewWord';
-
-function Menus(): JSX.Element {
+function Menus({navigation}: any): JSX.Element {
   return (
     <View style={styles.container}>
       <NativeBaseProvider>
@@ -27,11 +25,15 @@ function Menus(): JSX.Element {
                 </Pressable>
               );
             }}>
-            <Menu.Item>Practice</Menu.Item>
-            <Menu.Item>Statistics</Menu.Item>
-            <Menu.Item>
-              <NewWord />
+            <Menu.Item isDisabled={true}>Practice</Menu.Item>
+            <Menu.Item isDisabled={true}>Statistics</Menu.Item>
+            <Menu.Item onPress={() => navigation.navigate('Word')}>
+              Practice Word
             </Menu.Item>
+            <Menu.Item onPress={() => navigation.navigate('Sentence')}>
+              Practice Sentence
+            </Menu.Item>
+            <Menu.Item isDisabled={true}>New Word{/* <NewWord /> */}</Menu.Item>
           </Menu>
         </Box>
       </NativeBaseProvider>

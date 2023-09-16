@@ -1,13 +1,9 @@
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, View} from 'react-native';
 
 function LoginScreen({navigation}: any): JSX.Element {
   return (
     <View style={styles.container}>
-      <Text>sa</Text>
-      <Button
-        title="Go to Jane's profile"
-        onPress={() => navigation.navigate('Profile', {name: 'Jane'})}
-      />
+      <Button title="Login" onPress={() => navigation.navigate('Sentence')} />
     </View>
   );
 }

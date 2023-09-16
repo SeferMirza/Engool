@@ -1,4 +1,4 @@
-import {Word, OnlyWord} from '../types';
+import {Word, OnlyWord, Sentence} from '../types';
 import Config from 'react-native-config';
 
 const getWord = async () => {
@@ -87,4 +87,27 @@ const allWord = async () => {
   }
 };
 
-export {getWord, deleteWord, postWord, allWord};
+const getSentence = async () => {
+  try {
+    const response = await fetch(
+      `${Config.SERVICE_LOCAL_URL}/sentences/single`,
+    );
+    const json = await response.json();
+
+    const datas: Sentence = {
+      id: json.id,
+      engSection: {
+        engSentence: json.engText,
+      },
+      trSection: {
+        trSentence: json.trText,
+      },
+    };
+    return datas;
+  } catch (error: any) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+};
+
+export {getWord, deleteWord, postWord, allWord, getSentence};

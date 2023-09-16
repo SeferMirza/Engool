@@ -1,6 +1,5 @@
 using Do.Architecture;
 using Engool.Module;
-using Microsoft.VisualBasic;
 using System.Reflection;
 
 namespace Engool.Business;
@@ -12,9 +11,10 @@ public class BusinessFeature : IFeature
         configurator.ConfigureServiceCollection(services =>
         {
             services.AddTransientWithFactory<Word>();
+            services.AddTransientWithFactory<Initiator>();
             services.AddTransientWithFactory<Sentence>();
             services.AddSingleton<Words>();
-            services.AddSingleton<Sentencies>();
+            services.AddSingleton<Sentences>();
         });
 
         configurator.ConfigureAutoPersistenceModel(model =>

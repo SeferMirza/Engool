@@ -50,4 +50,13 @@ public class WordController
 
         target.GetWordById(id).Delete();
     }
+
+    [HttpGet]
+    [Route("words/initialize")]
+    public void InitializeWord([FromQuery] int? take = null)
+    {
+        var target = _serviceProvider.GetRequiredService<Initiator>();
+
+        target.InitializeWords(take);
+    }
 }
