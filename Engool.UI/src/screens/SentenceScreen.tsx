@@ -78,9 +78,9 @@ function SentenceScreen({navigation}: any): JSX.Element {
               </Text>
             </View>
           </View>
-          <View style={styles.trWordBox}>
+          <View style={layoutStyles.translationMeaningContent}>
             <View style={styles.trSentence}>
-              <Text style={styles.trSentenceText}>
+              <Text style={layoutStyles.translationMeaningContentText}>
                 {data.trSection.trSentence}
               </Text>
             </View>
