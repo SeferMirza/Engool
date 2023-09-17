@@ -22,7 +22,6 @@ import {Word} from '../types';
 function WordScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [noConnection, setNoConnection] = useState(false);
-
   const [data, setData] = useState<Word>({
     id: '',
     engSection: {
@@ -38,6 +37,12 @@ function WordScreen({navigation}: any): JSX.Element {
       okayButtonText: 'Öğrendim',
     },
   });
+  const [isHidden, setIsHidden] = useState(true);
+  const [translationWordContent, setTranslationWordContent] = useState(
+    'Türkçesini görmek için tıklayın!',
+  );
+  const [translationSentenceContent, setTranslationSentenceContent] =
+    useState('');
 
   const word = async () => {
     try {
@@ -91,16 +96,30 @@ function WordScreen({navigation}: any): JSX.Element {
             </View>
           </View>
           <View style={layoutStyles.translationMeaningContent}>
-            <View style={styles.trWord}>
-              <Text style={layoutStyles.translationMeaningContentText}>
-                {data.trSection.trWordText}
-              </Text>
-            </View>
-            <View style={styles.trSentence}>
-              <Text style={styles.trSentenceText}>
-                {data.trSection.trSentenceText}
-              </Text>
-            </View>
+            <TouchableOpacity
+              style={layoutStyles.translationMeaningContent}
+              onPressOut={() => {
+                setIsHidden(!isHidden);
+                setTranslationWordContent(
+                  isHidden
+                    ? 'Türkçesini görmek için tıklayın!'
+                    : data.trSection.trWordText,
+                );
+                setTranslationSentenceContent(
+                  isHidden ? '' : data.trSection.trSentenceText,
+                );
+              }}>
+              <View style={styles.trWord}>
+                <Text style={layoutStyles.translationMeaningContentText}>
+                  {translationWordContent}
+                </Text>
+              </View>
+              <View style={styles.trSentence}>
+                <Text style={styles.trSentenceText}>
+                  {translationSentenceContent}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={styles.bottomButtoms}>
             <TouchableOpacity style={styles.againButton} onPressOut={Again}>

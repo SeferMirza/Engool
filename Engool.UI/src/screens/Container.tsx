@@ -3,13 +3,13 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import LoginScreen from './Login';
-import WordScreen from '../WordScreen';
-import SentenceScreen from '../SentenceScreen';
+import LoginScreen from './authentication/Login';
+import WordScreen from './WordScreen';
+import SentenceScreen from './SentenceScreen';
 
 const Stack = createNativeStackNavigator();
 
-function AuthenticationContainer(): JSX.Element {
+function Container(): JSX.Element {
   return <PagesStack />;
 }
 
@@ -28,4 +28,4 @@ const PagesStack = () => {
   );
 };
 
-export default AuthenticationContainer;
+export default Container;

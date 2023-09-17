@@ -32,5 +32,6 @@ module.exports = StyleSheet.create({
   translationMeaningContentText: {
     fontSize: 28,
     fontWeight: 'bold',
+    flexShrink: 1,
   },
 });

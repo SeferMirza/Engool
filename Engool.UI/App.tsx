@@ -1,8 +1,8 @@
 import React from 'react';
-import AuthenticationContainer from './src/screens/authentication/AuthenticationContainer';
+import Container from './src/screens/Container';
 
 function App(): JSX.Element {
-  return <AuthenticationContainer />;
+  return <Container />;
 }
 
 export default App;
