@@ -31,6 +31,10 @@ function SentenceScreen({navigation}: any): JSX.Element {
       trSentence: '',
     },
   });
+  const [isHidden, setIsHidden] = useState(true);
+  const [translationContent, setTranslationContent] = useState(
+    'Türkçesini görmek için tıklayın!',
+  );
 
   const sentence = async () => {
     try {
@@ -49,14 +53,17 @@ function SentenceScreen({navigation}: any): JSX.Element {
   };
 
   useEffect(() => {
+    setIsHidden(true);
     sentence();
   }, []);
 
   function Again() {
+    setIsHidden(true);
     sentence();
   }
 
   function Next() {
+    setIsHidden(true);
     sentence();
   }
 
@@ -80,9 +87,20 @@ function SentenceScreen({navigation}: any): JSX.Element {
           </View>
           <View style={layoutStyles.translationMeaningContent}>
             <View style={styles.trSentence}>
-              <Text style={layoutStyles.translationMeaningContentText}>
-                {data.trSection.trSentence}
-              </Text>
+              <TouchableOpacity
+                style={{}}
+                onPressOut={() => {
+                  setIsHidden(!isHidden);
+                  setTranslationContent(
+                    isHidden
+                      ? 'Türkçesini görmek için tıklayın!'
+                      : data.trSection.trSentence,
+                  );
+                }}>
+                <Text style={layoutStyles.translationMeaningContentText}>
+                  {translationContent}
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
           <View style={styles.bottomButtoms}>
@@ -105,6 +123,9 @@ const styles = StyleSheet.create({
     flex: 6,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  hidden: {
+    color: '#FFFFFF',
   },
   engSentence: {},
   engSentenceText: {
