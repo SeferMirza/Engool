@@ -1,7 +1,7 @@
 import {Word, OnlyWord, Sentence} from '../types';
 import Config from 'react-native-config';
 
-const server = 'Webhook';
+const server = __DEV__ ? 'Server' : 'Webhook';
 //https://webhook.site/#!/21bd5e77-5f14-41ff-93aa-a8d91b56ac2a
 const getWord = async () => {
   try {
