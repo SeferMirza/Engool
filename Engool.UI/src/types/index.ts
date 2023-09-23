@@ -8,10 +8,6 @@ type Word = {
     trWordText: string;
     trSentenceText: string;
   };
-  buttonSection: {
-    againButtonText: string;
-    okayButtonText: string;
-  };
 };
 
 type Sentence = {
@@ -36,4 +32,9 @@ type OnlySentence = {
   trSentence: string;
 };
 
-export type {Word, Sentence, OnlyWord, OnlySentence};
+type Key = {
+  tr: string;
+  eng: string;
+};
+
+export type {Word, Sentence, OnlyWord, OnlySentence, Key};

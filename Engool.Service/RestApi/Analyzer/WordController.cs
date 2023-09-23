@@ -24,11 +24,21 @@ public class WordController
 
     [HttpGet]
     [Route("words/all")]
-    public List<Word> GetWords()
+    public List<Word> GetWords([FromQuery] int take, [FromQuery] int skip)
     {
         var target = _serviceProvider.GetRequiredService<Words>();
 
-        return target.GetWords();
+        return target.GetWords(take: take, skip: skip);
+    }
+
+
+    [HttpGet]
+    [Route("words/info")]
+    public int Info()
+    {
+        var target = _serviceProvider.GetRequiredService<Words>();
+
+        return target.GetWords().Count;
     }
 
     public record NewRequest(string EngText, string TrText, string EngSentence, string TrSentence);

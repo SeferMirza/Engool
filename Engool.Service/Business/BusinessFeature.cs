@@ -1,10 +1,11 @@
 using Do.Architecture;
+using Do.Business;
 using Engool.Module;
 using System.Reflection;
 
 namespace Engool.Business;
 
-public class BusinessFeature : IFeature
+public class BusinessFeature : IFeature<BusinessConfigurator>
 {
     public void Configure(LayerConfigurator configurator)
     {

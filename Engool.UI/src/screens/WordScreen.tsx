@@ -16,6 +16,7 @@ import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
 
 import {getWord} from '../utils/requests';
+import {getWordFromStore, storeWord} from '../utils/asyncStore';
 
 import {Word} from '../types';
 
@@ -32,10 +33,6 @@ function WordScreen({navigation}: any): JSX.Element {
       trWordText: '',
       trSentenceText: '',
     },
-    buttonSection: {
-      againButtonText: 'Tekrar',
-      okayButtonText: 'Öğrendim',
-    },
   });
   const [isHidden, setIsHidden] = useState(true);
   const [translationWordContent, setTranslationWordContent] = useState(
@@ -48,10 +45,18 @@ function WordScreen({navigation}: any): JSX.Element {
     try {
       setLoading(true);
 
-      const datas: Word = await getWord();
+      let datas: Word | null = await getWord();
 
-      setData(datas);
-      setNoConnection(false);
+      if (datas === null) {
+        return;
+      }
+
+      if ((await getWordFromStore(datas!)) !== null) {
+        word();
+      } else {
+        setData(datas);
+        setNoConnection(false);
+      }
     } catch (error) {
       setNoConnection(true);
       console.error(error);
@@ -62,13 +67,15 @@ function WordScreen({navigation}: any): JSX.Element {
 
   useEffect(() => {
     word();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function Again() {
     word();
   }
 
-  function Next() {
+  async function Next() {
+    await storeWord(data);
     word();
   }
 
@@ -123,14 +130,10 @@ function WordScreen({navigation}: any): JSX.Element {
           </View>
           <View style={styles.bottomButtoms}>
             <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <Text style={styles.buttonsText}>
-                {data.buttonSection.againButtonText}
-              </Text>
+              <Text style={styles.buttonsText}>Tekrar</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <Text style={styles.buttonsText}>
-                {data.buttonSection.okayButtonText}
-              </Text>
+              <Text style={styles.buttonsText}>Öğrendim</Text>
             </TouchableOpacity>
           </View>
         </View>
