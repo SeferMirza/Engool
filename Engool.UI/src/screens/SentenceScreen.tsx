@@ -10,6 +10,9 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faThumbsUp} from '@fortawesome/free-regular-svg-icons/faThumbsUp';
+import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
@@ -105,10 +108,10 @@ function SentenceScreen({navigation}: any): JSX.Element {
           </View>
           <View style={styles.bottomButtoms}>
             <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <Text style={styles.buttonsText}>Tekrar</Text>
+              <FontAwesomeIcon icon={faArrowsSpin} size={40} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <Text style={styles.buttonsText}>Öğrendim</Text>
+              <FontAwesomeIcon icon={faThumbsUp} size={40} />
             </TouchableOpacity>
           </View>
         </View>
@@ -154,10 +157,10 @@ const styles = StyleSheet.create({
   bottomButtoms: {
     flex: 1,
     flexDirection: 'row',
+    borderTopWidth: 0.5,
   },
   againButton: {
     alignSelf: 'flex-start',
-    backgroundColor: 'red',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
@@ -165,7 +168,6 @@ const styles = StyleSheet.create({
   },
   okayButton: {
     alignSelf: 'flex-end',
-    backgroundColor: 'green',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
