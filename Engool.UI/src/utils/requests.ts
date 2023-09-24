@@ -1,14 +1,57 @@
 import {Word, OnlyWord, Sentence} from '../types';
 import Config from 'react-native-config';
 
-const server = 'Webhook';
+const server = !__DEV__ ? 'Server' : 'Webhook';
 //https://webhook.site/#!/21bd5e77-5f14-41ff-93aa-a8d91b56ac2a
 const getWord = async () => {
+  try {
+    const pureInfo = await fetch(
+      server === 'Webhook'
+        ? 'https://webhook.site/21bd5e77-5f14-41ff-93aa-a8d91b56ac2a'
+        : `${Config.SERVICE_LOCAL_URL}/words/info`,
+    );
+    const jsonFormatInfo = await pureInfo.json();
+
+    var skipCount = Math.floor(Math.random() * (jsonFormatInfo - 0 + 1)) + 0;
+    const response = await fetch(
+      server === 'Webhook'
+        ? 'https://webhook.site/21bd5e77-5f14-41ff-93aa-a8d91b56ac2a'
+        : `${Config.SERVICE_LOCAL_URL}/words/all?take=1&skip=${skipCount}`,
+    );
+    const [json] = await response.json();
+
+    if (json === undefined) {
+      return null;
+    }
+
+    const datas: Word = {
+      id: json.id,
+      engSection: {
+        engWordText: json.engText,
+        engSentenceText: json.engSentence,
+      },
+      trSection: {
+        trWordText: json.trText,
+        trSentenceText: json.trSentence,
+      },
+    };
+
+    return datas;
+  } catch (error: any) {
+    console.error(error);
+    throw new Error(error.message);
+  }
+};
+
+const getWordBut = async (skipThese: Word[]) => {
   try {
     const response = await fetch(
       server === 'Webhook'
         ? 'https://webhook.site/21bd5e77-5f14-41ff-93aa-a8d91b56ac2a'
         : `${Config.SERVICE_LOCAL_URL}/words/single`,
+      {
+        body: JSON.stringify(skipThese),
+      },
     );
     const json = await response.json();
 
@@ -21,10 +64,6 @@ const getWord = async () => {
       trSection: {
         trWordText: json.trText,
         trSentenceText: json.trSentence,
-      },
-      buttonSection: {
-        againButtonText: 'Tekrar',
-        okayButtonText: 'Öğrendim',
       },
     };
     return datas;
@@ -118,4 +157,4 @@ const getSentence = async () => {
   }
 };
 
-export {getWord, deleteWord, postWord, allWord, getSentence};
+export {getWord, deleteWord, postWord, allWord, getSentence, getWordBut};
