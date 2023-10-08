@@ -4,8 +4,8 @@ namespace Engool.Module;
 
 public class Word
 {
-    IEntityContext<Word> _context = default!;
     Words _words;
+    IEntityContext<Word> _context = default!;
 
     protected Word() { }
     public Word(IEntityContext<Word> context, Words words)

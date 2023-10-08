@@ -3,7 +3,7 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-import LoginScreen from './authentication/Login';
+import EntryScreen from './EntryScreen';
 import WordScreen from './WordScreen';
 import SentenceScreen from './SentenceScreen';
 
@@ -20,7 +20,7 @@ const PagesStack = () => {
         screenOptions={{
           headerShown: false,
         }}>
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Entry" component={EntryScreen} />
         <Stack.Screen name="Sentence" component={SentenceScreen} />
         <Stack.Screen name="Word" component={WordScreen} />
       </Stack.Navigator>
