@@ -6,7 +6,7 @@ const server = 'Webhook';
 const getWord = async () => {
   try {
     const response = await fetch(
-      server !== 'Webhook'
+      server === 'Webhook'
         ? 'https://webhook.site/21bd5e77-5f14-41ff-93aa-a8d91b56ac2a'
         : `${Config.SERVICE_LOCAL_URL}/words/single`,
     );
@@ -96,7 +96,7 @@ const allWord = async () => {
 const getSentence = async () => {
   try {
     const response = await fetch(
-      server !== 'Webhook'
+      server === 'Webhook'
         ? 'https://webhook.site/455de0ce-8c67-4f23-8b0d-94834b51ebed'
         : `${Config.SERVICE_LOCAL_URL}/sentences/single`,
     );
