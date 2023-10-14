@@ -8,10 +8,6 @@ type Word = {
     trWordText: string;
     trSentenceText: string;
   };
-  buttonSection: {
-    againButtonText: string;
-    okayButtonText: string;
-  };
 };
 
 type Sentence = {

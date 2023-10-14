@@ -32,10 +32,6 @@ function WordScreen({navigation}: any): JSX.Element {
       trWordText: '',
       trSentenceText: '',
     },
-    buttonSection: {
-      againButtonText: 'Tekrar',
-      okayButtonText: 'Öğrendim',
-    },
   });
   const [isHidden, setIsHidden] = useState(true);
   const [translationWordContent, setTranslationWordContent] = useState(
@@ -123,14 +119,10 @@ function WordScreen({navigation}: any): JSX.Element {
           </View>
           <View style={styles.bottomButtoms}>
             <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <Text style={styles.buttonsText}>
-                {data.buttonSection.againButtonText}
-              </Text>
+              <Text style={styles.buttonsText}>Again</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <Text style={styles.buttonsText}>
-                {data.buttonSection.okayButtonText}
-              </Text>
+              <Text style={styles.buttonsText}>Okay</Text>
             </TouchableOpacity>
           </View>
         </View>
