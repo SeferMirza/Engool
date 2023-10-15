@@ -10,12 +10,16 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faThumbsUp} from '@fortawesome/free-regular-svg-icons/faThumbsUp';
+import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
 
 import {getWord} from '../utils/requests';
+import {getWordFromStore, storeWord} from '../utils/asyncStore';
 
 import {Word} from '../types';
 
@@ -44,10 +48,18 @@ function WordScreen({navigation}: any): JSX.Element {
     try {
       setLoading(true);
 
-      const datas: Word = await getWord();
+      let datas: Word | null = await getWord();
 
-      setData(datas);
-      setNoConnection(false);
+      if (datas === null) {
+        return;
+      }
+
+      if ((await getWordFromStore(datas!)) !== null) {
+        word();
+      } else {
+        setData(datas);
+        setNoConnection(false);
+      }
     } catch (error) {
       setNoConnection(true);
       console.error(error);
@@ -58,13 +70,15 @@ function WordScreen({navigation}: any): JSX.Element {
 
   useEffect(() => {
     word();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function Again() {
     word();
   }
 
-  function Next() {
+  async function Next() {
+    await storeWord(data);
     word();
   }
 
@@ -119,10 +133,10 @@ function WordScreen({navigation}: any): JSX.Element {
           </View>
           <View style={styles.bottomButtoms}>
             <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <Text style={styles.buttonsText}>Again</Text>
+              <FontAwesomeIcon icon={faArrowsSpin} size={40} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <Text style={styles.buttonsText}>Okay</Text>
+              <FontAwesomeIcon icon={faThumbsUp} size={40} />
             </TouchableOpacity>
           </View>
         </View>
@@ -146,10 +160,10 @@ const styles = StyleSheet.create({
   bottomButtoms: {
     flex: 1,
     flexDirection: 'row',
+    borderTopWidth: 0.5,
   },
   againButton: {
     alignSelf: 'flex-start',
-    backgroundColor: 'red',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
@@ -157,7 +171,6 @@ const styles = StyleSheet.create({
   },
   okayButton: {
     alignSelf: 'flex-end',
-    backgroundColor: 'green',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
