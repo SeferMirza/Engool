@@ -6,7 +6,6 @@ const height = Dimensions.get('window').height;
 module.exports = StyleSheet.create({
   againButton: {
     alignSelf: 'flex-start',
-    backgroundColor: 'red',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
@@ -14,7 +13,6 @@ module.exports = StyleSheet.create({
   },
   okayButton: {
     alignSelf: 'flex-end',
-    backgroundColor: 'green',
     width: '50%',
     height: '100%',
     justifyContent: 'center',

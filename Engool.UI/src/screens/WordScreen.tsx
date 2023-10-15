@@ -2,7 +2,7 @@
 array boş gelince bumluyor o düzeltilecek
 */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -10,9 +10,6 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faThumbsUp} from '@fortawesome/free-regular-svg-icons/faThumbsUp';
-import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
@@ -44,7 +41,7 @@ function WordScreen({navigation}: any): JSX.Element {
   const [translationSentenceContent, setTranslationSentenceContent] =
     useState('');
 
-  const word = async () => {
+  const word = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -66,15 +63,16 @@ function WordScreen({navigation}: any): JSX.Element {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     word();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [word]);
 
   function Again() {
     word();
+    setIsHidden(true);
+    setTranslationWordContent('Türkçesini görmek için tıklayın!');
   }
 
   async function Next() {
@@ -132,12 +130,11 @@ function WordScreen({navigation}: any): JSX.Element {
             </TouchableOpacity>
           </View>
           <View style={styles.bottomButtoms}>
-            <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <Text style={styles.buttonsText}>Again</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <Text style={styles.buttonsText}>Okay</Text>
-            </TouchableOpacity>
+            <AgainButton
+              style={componentStyles.againButton}
+              onPressOut={Again}
+            />
+            <NextButton style={componentStyles.okayButton} onPressOut={Next} />
           </View>
         </View>
       )}
@@ -162,26 +159,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     borderTopWidth: 0.5,
-  },
-  againButton: {
-    alignSelf: 'flex-start',
-    backgroundColor: 'red',
-    width: '50%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  okayButton: {
-    alignSelf: 'flex-end',
-    backgroundColor: 'green',
-    width: '50%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonsText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });
 
