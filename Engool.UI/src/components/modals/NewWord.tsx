@@ -47,12 +47,12 @@ const NewWord = () => {
         onRequestClose={() => {
           setModalVisible(!modalVisible);
         }}>
-        <View style={modalStyle.modalContainer}>
+        <View style={componentStyle.modalContainer}>
           <View style={styles.modalView}>
             <View style={layoutStyle.row}>
               <Text style={[styles.textBlock, styles.modalText]}>English:</Text>
               <TextInput
-                style={[styles.inputBlock, textInputStyle.smoothTextInput]}
+                style={[styles.inputBlock, componentStyle.smoothTextInput]}
                 onChangeText={onChangeEngW}
                 value={engW}
               />
@@ -60,7 +60,7 @@ const NewWord = () => {
             <View style={layoutStyle.row}>
               <Text style={[styles.textBlock, styles.modalText]}>Turkish:</Text>
               <TextInput
-                style={[styles.inputBlock, textInputStyle.smoothTextInput]}
+                style={[styles.inputBlock, componentStyle.smoothTextInput]}
                 onChangeText={onChangeTrW}
                 value={trW}
               />
@@ -73,7 +73,7 @@ const NewWord = () => {
                 multiline
                 style={[
                   styles.inputBlock,
-                  textInputStyle.noRestrictionsSmoothTextInput,
+                  componentStyle.noRestrictionsSmoothTextInput,
                 ]}
                 onChangeText={onChangeEngS}
                 value={engS}
@@ -87,7 +87,7 @@ const NewWord = () => {
                 multiline
                 style={[
                   styles.inputBlock,
-                  textInputStyle.noRestrictionsSmoothTextInput,
+                  componentStyle.noRestrictionsSmoothTextInput,
                 ]}
                 onChangeText={onChangeTrS}
                 value={trS}
@@ -124,9 +124,8 @@ const NewWord = () => {
 
 const width = Dimensions.get('window').width;
 
-const modalStyle = require('../../styles/modal');
 const layoutStyle = require('../../styles/layout');
-const textInputStyle = require('../../styles/textInput');
+const componentStyle = require('../../styles/component');
 const styles = StyleSheet.create({
   centeredView: {
     justifyContent: 'center',

@@ -17,9 +17,8 @@ import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
-
+import {AgainButton, NextButton} from '../components/IconButtons';
 import {getSentence} from '../utils/requests';
-
 import {Sentence} from '../types';
 
 function SentenceScreen({navigation}: any): JSX.Element {
@@ -107,12 +106,11 @@ function SentenceScreen({navigation}: any): JSX.Element {
             </View>
           </View>
           <View style={styles.bottomButtoms}>
-            <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <FontAwesomeIcon icon={faArrowsSpin} size={40} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <FontAwesomeIcon icon={faThumbsUp} size={40} />
-            </TouchableOpacity>
+            <AgainButton
+              style={componentStyles.againButton}
+              onPressOut={Again}
+            />
+            <NextButton style={componentStyles.okayButton} onPressOut={Next} />
           </View>
         </View>
       )}
@@ -121,6 +119,7 @@ function SentenceScreen({navigation}: any): JSX.Element {
 }
 
 const layoutStyles = require('../styles/layout');
+const componentStyles = require('../styles/component');
 const styles = StyleSheet.create({
   engWordBox: {
     flex: 6,
@@ -161,6 +160,7 @@ const styles = StyleSheet.create({
   },
   againButton: {
     alignSelf: 'flex-start',
+    backgroundColor: 'red',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
   },
   okayButton: {
     alignSelf: 'flex-end',
+    backgroundColor: 'green',
     width: '50%',
     height: '100%',
     justifyContent: 'center',

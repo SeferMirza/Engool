@@ -17,7 +17,7 @@ import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
-
+import {AgainButton, NextButton} from '../components/IconButtons';
 import {getWord} from '../utils/requests';
 import {getWordFromStore, storeWord} from '../utils/asyncStore';
 
@@ -133,10 +133,10 @@ function WordScreen({navigation}: any): JSX.Element {
           </View>
           <View style={styles.bottomButtoms}>
             <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <FontAwesomeIcon icon={faArrowsSpin} size={40} />
+              <Text style={styles.buttonsText}>Again</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <FontAwesomeIcon icon={faThumbsUp} size={40} />
+              <Text style={styles.buttonsText}>Okay</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -146,6 +146,7 @@ function WordScreen({navigation}: any): JSX.Element {
 }
 
 const layoutStyles = require('../styles/layout');
+const componentStyles = require('../styles/component');
 const styles = StyleSheet.create({
   engSentence: {},
   engSentenceText: {
@@ -164,6 +165,7 @@ const styles = StyleSheet.create({
   },
   againButton: {
     alignSelf: 'flex-start',
+    backgroundColor: 'red',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
@@ -171,6 +173,7 @@ const styles = StyleSheet.create({
   },
   okayButton: {
     alignSelf: 'flex-end',
+    backgroundColor: 'green',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
