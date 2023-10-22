@@ -10,9 +10,6 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faThumbsUp} from '@fortawesome/free-regular-svg-icons/faThumbsUp';
-import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
@@ -20,6 +17,7 @@ import Menus from '../components/Menus';
 import {AgainButton, NextButton} from '../components/IconButtons';
 import {getSentence} from '../utils/requests';
 import {Sentence} from '../types';
+import DEFAULTS from '../utils/defaults';
 
 function SentenceScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
@@ -35,7 +33,7 @@ function SentenceScreen({navigation}: any): JSX.Element {
   });
   const [isHidden, setIsHidden] = useState(true);
   const [translationContent, setTranslationContent] = useState(
-    'Türkçesini görmek için tıklayın!',
+    DEFAULTS.TRANSLATION_TEXT,
   );
 
   const sentence = async () => {
@@ -62,11 +60,13 @@ function SentenceScreen({navigation}: any): JSX.Element {
   function Again() {
     setIsHidden(true);
     sentence();
+    setTranslationContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   function Next() {
     setIsHidden(true);
     sentence();
+    setTranslationContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   return (
@@ -95,7 +95,7 @@ function SentenceScreen({navigation}: any): JSX.Element {
                   setIsHidden(!isHidden);
                   setTranslationContent(
                     isHidden
-                      ? 'Türkçesini görmek için tıklayın!'
+                      ? DEFAULTS.TRANSLATION_TEXT
                       : data.trSection.trSentence,
                   );
                 }}>

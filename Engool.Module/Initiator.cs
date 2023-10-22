@@ -13,18 +13,18 @@ public class Initiator
         _sentence = sentence;
     }
 
-    protected record JsonData(string eng, string tr);
+    protected record JsonData(string Eng, string Tr);
 
     public void InitializeWords(int? take = null)
     {
         var pureJson = File.ReadAllText("InitialWords.json");
-        
+
         List<JsonData> listWords = JsonSerializer.Deserialize<List<JsonData>>(pureJson);
         listWords = take is null ? listWords : listWords.Take((int)take).ToList();
 
-        foreach(var jsonWordData in listWords)
+        foreach (var jsonWordData in listWords)
         {
-            _newWord().With(jsonWordData.eng, jsonWordData.tr, "", "");
+            _newWord().With(jsonWordData.Eng, jsonWordData.Tr);
         }
     }
 
@@ -37,7 +37,7 @@ public class Initiator
 
         foreach (var jsonSentenceData in listSentences)
         {
-            _sentence().With(jsonSentenceData.eng, jsonSentenceData.tr);
+            _sentence().With(jsonSentenceData.Eng, jsonSentenceData.Tr);
         }
     }
 }

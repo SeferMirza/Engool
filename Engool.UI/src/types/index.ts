@@ -2,11 +2,9 @@ type Word = {
   id: string;
   engSection: {
     engWordText: string;
-    engSentenceText: string;
   };
   trSection: {
     trWordText: string;
-    trSentenceText: string;
   };
 };
 

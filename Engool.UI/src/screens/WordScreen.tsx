@@ -17,6 +17,7 @@ import Menus from '../components/Menus';
 import {AgainButton, NextButton} from '../components/IconButtons';
 import {getWord} from '../utils/requests';
 import {getWordFromStore, storeWord} from '../utils/asyncStore';
+import DEFAULTS from '../utils/defaults';
 
 import {Word} from '../types';
 
@@ -27,20 +28,15 @@ function WordScreen({navigation}: any): JSX.Element {
     id: '',
     engSection: {
       engWordText: '',
-      engSentenceText: '',
     },
     trSection: {
       trWordText: '',
-      trSentenceText: '',
     },
   });
   const [isHidden, setIsHidden] = useState(true);
   const [translationWordContent, setTranslationWordContent] = useState(
-    'Türkçesini görmek için tıklayın!',
+    DEFAULTS.TRANSLATION_TEXT,
   );
-  const [translationSentenceContent, setTranslationSentenceContent] =
-    useState('');
-
   const word = useCallback(async () => {
     try {
       setLoading(true);
@@ -72,12 +68,13 @@ function WordScreen({navigation}: any): JSX.Element {
   function Again() {
     word();
     setIsHidden(true);
-    setTranslationWordContent('Türkçesini görmek için tıklayın!');
+    setTranslationWordContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   async function Next() {
     await storeWord(data);
     word();
+    setTranslationWordContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   return (
@@ -97,11 +94,6 @@ function WordScreen({navigation}: any): JSX.Element {
                 {data.engSection.engWordText}
               </Text>
             </View>
-            <View style={styles.engSentence}>
-              <Text style={styles.engSentenceText}>
-                {data.engSection.engSentenceText}
-              </Text>
-            </View>
           </View>
           <View style={layoutStyles.translationMeaningContent}>
             <TouchableOpacity
@@ -110,21 +102,13 @@ function WordScreen({navigation}: any): JSX.Element {
                 setIsHidden(!isHidden);
                 setTranslationWordContent(
                   isHidden
-                    ? 'Türkçesini görmek için tıklayın!'
+                    ? DEFAULTS.TRANSLATION_TEXT
                     : data.trSection.trWordText,
-                );
-                setTranslationSentenceContent(
-                  isHidden ? '' : data.trSection.trSentenceText,
                 );
               }}>
               <View style={styles.trWord}>
                 <Text style={layoutStyles.translationMeaningContentText}>
                   {translationWordContent}
-                </Text>
-              </View>
-              <View style={styles.trSentence}>
-                <Text style={styles.trSentenceText}>
-                  {translationSentenceContent}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -145,15 +129,7 @@ function WordScreen({navigation}: any): JSX.Element {
 const layoutStyles = require('../styles/layout');
 const componentStyles = require('../styles/component');
 const styles = StyleSheet.create({
-  engSentence: {},
-  engSentenceText: {
-    fontSize: 18,
-  },
   engWord: {},
-  trSentence: {},
-  trSentenceText: {
-    fontSize: 18,
-  },
   trWord: {},
   bottomButtoms: {
     flex: 1,

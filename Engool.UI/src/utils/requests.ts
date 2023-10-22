@@ -21,11 +21,9 @@ const getWord = async () => {
       id: json.id,
       engSection: {
         engWordText: json.engText,
-        engSentenceText: json.engSentence,
       },
       trSection: {
         trWordText: json.trText,
-        trSentenceText: json.trSentence,
       },
     };
 
