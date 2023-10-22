@@ -15,30 +15,26 @@ public class Word
     }
 
     public virtual Guid Id { get; protected set; } = default!;
-    public virtual string EngSentence { get; protected set; } = default!;
     public virtual string EngText { get; protected set; } = default!;
-    public virtual string TrSentence { get; protected set; } = default!;
     public virtual string TrText { get; protected set; } = default!;
     public virtual bool IsDeleted { get; protected set; } = default!;
 
-    public virtual Word With(string engText, string trText, string engSentence, string trSentence)
+    public virtual Word With(string engText, string trText)
     {
-        if(_words.GetWord(engText, trText, engSentence, trSentence) is not null) { return this; }
+        if(_words.GetWord(engText, trText) is not null) { return this; }
 
-        Set(engText, trText, engSentence, trSentence, isDeleted: false);
+        Set(engText, trText, isDeleted: false);
 
         return _context.Insert(this);
     }
 
-    public virtual async Task Update(string engText, string trText, string engSentence, string trSentence) =>
-        Set(engText, trText, engSentence, trSentence, IsDeleted);
+    public virtual async Task Update(string engText, string trText) =>
+        Set(engText, trText, IsDeleted);
 
-    protected virtual void Set(string engText, string trText, string engSentence, string trSentence, bool isDeleted)
+    protected virtual void Set(string engText, string trText, bool isDeleted)
     {
         EngText = engText;
         TrText = trText;
-        EngSentence = engSentence;
-        TrSentence = trSentence;
         IsDeleted = isDeleted;
     }
 
@@ -47,8 +43,6 @@ public class Word
         Set(
             engText: EngText,
             trText: TrText,
-            engSentence: EngSentence,
-            trSentence: TrSentence,
             isDeleted: true
         );
 }
@@ -60,13 +54,11 @@ public class Words
     public Words(IQueryContext<Word> context) =>
         _context = context;
 
-    public Word? GetWord(string eng, string tr, string engSentence, string trSentence) =>
+    public Word? GetWord(string eng, string tr) =>
         _context.SingleBy(w =>
             w.IsDeleted == false &&
             w.EngText == eng &&
-            w.TrText == tr &&
-            w.EngSentence == engSentence &&
-            w.TrSentence == trSentence
+            w.TrText == tr
         );
     public Word GetWordById(Guid id) => _context.All(w => w.IsDeleted == false && w.Id == id).FirstOrDefault();
     public Word GetWord() => _context.All(w => w.IsDeleted == false).FirstOrDefault();
