@@ -1,8 +1,4 @@
-/*
-array boş gelince bumluyor o düzeltilecek
-*/
-
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   ActivityIndicator,
   StyleSheet,
@@ -10,41 +6,41 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faThumbsUp} from '@fortawesome/free-regular-svg-icons/faThumbsUp';
-import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
+import {AgainButton, NextButton} from '../components/IconButtons';
 
+// Utils
 import {getWord} from '../utils/requests';
 import {getWordFromStore, storeWord} from '../utils/asyncStore';
+import DEFAULTS from '../utils/defaults';
 
+// Types
 import {Word} from '../types';
+
+// Styles
+import LayoutStyles from '../styles/layout';
+import ComponentStyles from '../styles/component';
 
 function WordScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [noConnection, setNoConnection] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
+  const [translationWordContent, setTranslationWordContent] = useState(
+    DEFAULTS.TRANSLATION_TEXT,
+  );
   const [data, setData] = useState<Word>({
     id: '',
     engSection: {
       engWordText: '',
-      engSentenceText: '',
     },
     trSection: {
       trWordText: '',
-      trSentenceText: '',
     },
   });
-  const [isHidden, setIsHidden] = useState(true);
-  const [translationWordContent, setTranslationWordContent] = useState(
-    'Türkçesini görmek için tıklayın!',
-  );
-  const [translationSentenceContent, setTranslationSentenceContent] =
-    useState('');
-
-  const word = async () => {
+  const word = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -66,78 +62,66 @@ function WordScreen({navigation}: any): JSX.Element {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     word();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [word]);
 
   function Again() {
     word();
+    setIsHidden(true);
+    setTranslationWordContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   async function Next() {
     await storeWord(data);
     word();
+    setTranslationWordContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   return (
-    <View style={layoutStyles.container}>
+    <View style={LayoutStyles.container}>
       {isLoading ? (
         <ActivityIndicator />
       ) : noConnection && !__DEV__ ? (
         <NoConnection />
       ) : (
-        <View style={layoutStyles.column}>
+        <View style={LayoutStyles.column}>
           <TopBar>
             <Menus navigation={navigation} />
           </TopBar>
-          <View style={layoutStyles.mainContent}>
+          <View style={LayoutStyles.mainContent}>
             <View style={styles.engWord}>
-              <Text style={layoutStyles.mainContentText}>
+              <Text style={LayoutStyles.mainContentText}>
                 {data.engSection.engWordText}
               </Text>
             </View>
-            <View style={styles.engSentence}>
-              <Text style={styles.engSentenceText}>
-                {data.engSection.engSentenceText}
-              </Text>
-            </View>
           </View>
-          <View style={layoutStyles.translationMeaningContent}>
+          <View style={LayoutStyles.translationMeaningContent}>
             <TouchableOpacity
-              style={layoutStyles.translationMeaningContent}
+              style={LayoutStyles.translationMeaningContent}
               onPressOut={() => {
                 setIsHidden(!isHidden);
                 setTranslationWordContent(
                   isHidden
-                    ? 'Türkçesini görmek için tıklayın!'
+                    ? DEFAULTS.TRANSLATION_TEXT
                     : data.trSection.trWordText,
-                );
-                setTranslationSentenceContent(
-                  isHidden ? '' : data.trSection.trSentenceText,
                 );
               }}>
               <View style={styles.trWord}>
-                <Text style={layoutStyles.translationMeaningContentText}>
+                <Text style={LayoutStyles.translationMeaningContentText}>
                   {translationWordContent}
-                </Text>
-              </View>
-              <View style={styles.trSentence}>
-                <Text style={styles.trSentenceText}>
-                  {translationSentenceContent}
                 </Text>
               </View>
             </TouchableOpacity>
           </View>
           <View style={styles.bottomButtoms}>
-            <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <FontAwesomeIcon icon={faArrowsSpin} size={40} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <FontAwesomeIcon icon={faThumbsUp} size={40} />
-            </TouchableOpacity>
+            <AgainButton
+              style={ComponentStyles.againButton}
+              onPressOut={Again}
+            />
+            <NextButton style={ComponentStyles.okayButton} onPressOut={Next} />
           </View>
         </View>
       )}
@@ -145,40 +129,13 @@ function WordScreen({navigation}: any): JSX.Element {
   );
 }
 
-const layoutStyles = require('../styles/layout');
 const styles = StyleSheet.create({
-  engSentence: {},
-  engSentenceText: {
-    fontSize: 18,
-  },
   engWord: {},
-  trSentence: {},
-  trSentenceText: {
-    fontSize: 18,
-  },
   trWord: {},
   bottomButtoms: {
     flex: 1,
     flexDirection: 'row',
     borderTopWidth: 0.5,
-  },
-  againButton: {
-    alignSelf: 'flex-start',
-    width: '50%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  okayButton: {
-    alignSelf: 'flex-end',
-    width: '50%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonsText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });
 

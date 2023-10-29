@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-module.exports = StyleSheet.create({
+const LayoutStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
@@ -35,3 +35,5 @@ module.exports = StyleSheet.create({
     flexShrink: 1,
   },
 });
+
+export default LayoutStyles;

@@ -41,7 +41,7 @@ public class WordController
         return target.GetWords().Count;
     }
 
-    public record NewRequest(string EngText, string TrText, string EngSentence, string TrSentence);
+    public record NewRequest(string EngText, string TrText);
 
     [HttpPost]
     [Route("words")]
@@ -49,7 +49,7 @@ public class WordController
     {
         var target = _serviceProvider.GetRequiredService<Word>();
 
-        return target.With(request.EngText, request.TrText, request.EngSentence, request.TrSentence);
+        return target.With(request.EngText, request.TrText);
     }
 
     [HttpDelete]

@@ -1,7 +1,3 @@
-/*
-array boş gelince bumluyor o düzeltilecek
-*/
-
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
@@ -10,21 +6,30 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faThumbsUp} from '@fortawesome/free-regular-svg-icons/faThumbsUp';
-import {faArrowsSpin} from '@fortawesome/free-solid-svg-icons/faArrowsSpin';
 
 import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
+import {AgainButton, NextButton} from '../components/IconButtons';
 
-import {getSentence} from '../utils/requests';
-
+// Types
 import {Sentence} from '../types';
+
+// Utils
+import {getSentence} from '../utils/requests';
+import DEFAULTS from '../utils/defaults';
+
+// Styles
+import LayoutStyles from '../styles/layout';
+import ComponentStyles from '../styles/component';
 
 function SentenceScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [noConnection, setNoConnection] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
+  const [translationContent, setTranslationContent] = useState(
+    DEFAULTS.TRANSLATION_TEXT,
+  );
   const [data, setData] = useState<Sentence>({
     id: '',
     engSection: {
@@ -34,10 +39,6 @@ function SentenceScreen({navigation}: any): JSX.Element {
       trSentence: '',
     },
   });
-  const [isHidden, setIsHidden] = useState(true);
-  const [translationContent, setTranslationContent] = useState(
-    'Türkçesini görmek için tıklayın!',
-  );
 
   const sentence = async () => {
     try {
@@ -63,32 +64,34 @@ function SentenceScreen({navigation}: any): JSX.Element {
   function Again() {
     setIsHidden(true);
     sentence();
+    setTranslationContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   function Next() {
     setIsHidden(true);
     sentence();
+    setTranslationContent(DEFAULTS.TRANSLATION_TEXT);
   }
 
   return (
-    <View style={layoutStyles.container}>
+    <View style={LayoutStyles.container}>
       {isLoading ? (
         <ActivityIndicator />
       ) : noConnection && !__DEV__ ? (
         <NoConnection />
       ) : (
-        <View style={layoutStyles.column}>
+        <View style={LayoutStyles.column}>
           <TopBar>
             <Menus navigation={navigation} />
           </TopBar>
-          <View style={layoutStyles.mainContent}>
+          <View style={LayoutStyles.mainContent}>
             <View style={styles.engSentence}>
-              <Text style={layoutStyles.mainContentText}>
+              <Text style={LayoutStyles.mainContentText}>
                 {data.engSection.engSentence}
               </Text>
             </View>
           </View>
-          <View style={layoutStyles.translationMeaningContent}>
+          <View style={LayoutStyles.translationMeaningContent}>
             <View style={styles.trSentence}>
               <TouchableOpacity
                 style={{}}
@@ -96,23 +99,22 @@ function SentenceScreen({navigation}: any): JSX.Element {
                   setIsHidden(!isHidden);
                   setTranslationContent(
                     isHidden
-                      ? 'Türkçesini görmek için tıklayın!'
+                      ? DEFAULTS.TRANSLATION_TEXT
                       : data.trSection.trSentence,
                   );
                 }}>
-                <Text style={layoutStyles.translationMeaningContentText}>
+                <Text style={LayoutStyles.translationMeaningContentText}>
                   {translationContent}
                 </Text>
               </TouchableOpacity>
             </View>
           </View>
           <View style={styles.bottomButtoms}>
-            <TouchableOpacity style={styles.againButton} onPressOut={Again}>
-              <FontAwesomeIcon icon={faArrowsSpin} size={40} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.okayButton} onPressOut={Next}>
-              <FontAwesomeIcon icon={faThumbsUp} size={40} />
-            </TouchableOpacity>
+            <AgainButton
+              style={ComponentStyles.againButton}
+              onPressOut={Again}
+            />
+            <NextButton style={ComponentStyles.okayButton} onPressOut={Next} />
           </View>
         </View>
       )}
@@ -120,40 +122,12 @@ function SentenceScreen({navigation}: any): JSX.Element {
   );
 }
 
-const layoutStyles = require('../styles/layout');
 const styles = StyleSheet.create({
-  engWordBox: {
-    flex: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   hidden: {
     color: '#FFFFFF',
   },
   engSentence: {},
-  engSentenceText: {
-    fontSize: 18,
-  },
-  engWord: {},
-  engWordText: {
-    fontSize: 50,
-    fontWeight: 'bold',
-  },
-  trWordBox: {
-    flex: 3,
-    borderTopWidth: 0.2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   trSentence: {},
-  trSentenceText: {
-    fontSize: 18,
-  },
-  trWord: {},
-  trWordText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
   bottomButtoms: {
     flex: 1,
     flexDirection: 'row',
@@ -161,6 +135,7 @@ const styles = StyleSheet.create({
   },
   againButton: {
     alignSelf: 'flex-start',
+    backgroundColor: 'red',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
@@ -168,14 +143,11 @@ const styles = StyleSheet.create({
   },
   okayButton: {
     alignSelf: 'flex-end',
+    backgroundColor: 'green',
     width: '50%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  buttonsText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });
 
