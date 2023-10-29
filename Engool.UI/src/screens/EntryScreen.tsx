@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 import {View, Pressable, StyleSheet, Text} from 'react-native';
 
+// Styles
+import LayoutStyles from '../styles/layout';
+
 function EntryScreen({navigation}: any): JSX.Element {
   const [wordButtonPressStyle, setWordButtonPressStyle] = useState({});
   const [sentenceButtonPressStyle, setSenteceButtonPressStyle] = useState({});
 
   return (
-    <View style={layoutStyles.container}>
-      <View style={[layoutStyles.row, styles.row]}>
-        <View style={[layoutStyles.col, styles.col]}>
+    <View style={LayoutStyles.container}>
+      <View style={[LayoutStyles.row, styles.row]}>
+        <View style={[LayoutStyles.column, styles.col]}>
           <Pressable
             onPress={() => {
               navigation.navigate('Word');
@@ -23,7 +26,7 @@ function EntryScreen({navigation}: any): JSX.Element {
             <Text>Word Practice</Text>
           </Pressable>
         </View>
-        <View style={[layoutStyles.col, styles.col]}>
+        <View style={[LayoutStyles.column, styles.col]}>
           <Pressable
             onPress={() => {
               navigation.navigate('Sentence');
@@ -41,7 +44,6 @@ function EntryScreen({navigation}: any): JSX.Element {
   );
 }
 
-const layoutStyles = require('../styles/layout');
 const styles = StyleSheet.create({
   col: {
     flex: 1,
