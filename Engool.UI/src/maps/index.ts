@@ -1,4 +1,4 @@
-function DbResponseToWord(data: any) {
+function ServerResponseToWord(data: any) {
   return {
     id: data.id,
     engSection: {
@@ -12,7 +12,7 @@ function DbResponseToWord(data: any) {
   };
 }
 
-function DbResponseToSentence(data: any) {
+function ServerResponseToSentence(data: any) {
   return {
     id: data.id,
     engSection: {
@@ -24,4 +24,4 @@ function DbResponseToSentence(data: any) {
   };
 }
 
-export {DbResponseToWord, DbResponseToSentence};
+export {ServerResponseToWord, ServerResponseToSentence};

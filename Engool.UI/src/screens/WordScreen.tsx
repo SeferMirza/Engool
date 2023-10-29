@@ -1,7 +1,3 @@
-/*
-array boş gelince bumluyor o düzeltilecek
-*/
-
 import React, {useEffect, useState, useCallback} from 'react';
 import {
   ActivityIndicator,
@@ -15,11 +11,18 @@ import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
 import {AgainButton, NextButton} from '../components/IconButtons';
+
+// Utils
 import {getWord} from '../utils/requests';
 import {getWordFromStore, storeWord} from '../utils/asyncStore';
 import DEFAULTS from '../utils/defaults';
 
+// Types
 import {Word} from '../types';
+
+// Styles
+import LayoutStyles from '../styles/layout';
+import ComponentStyles from '../styles/component';
 
 function WordScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
@@ -78,26 +81,26 @@ function WordScreen({navigation}: any): JSX.Element {
   }
 
   return (
-    <View style={layoutStyles.container}>
+    <View style={LayoutStyles.container}>
       {isLoading ? (
         <ActivityIndicator />
       ) : noConnection && !__DEV__ ? (
         <NoConnection />
       ) : (
-        <View style={layoutStyles.column}>
+        <View style={LayoutStyles.column}>
           <TopBar>
             <Menus navigation={navigation} />
           </TopBar>
-          <View style={layoutStyles.mainContent}>
+          <View style={LayoutStyles.mainContent}>
             <View style={styles.engWord}>
-              <Text style={layoutStyles.mainContentText}>
+              <Text style={LayoutStyles.mainContentText}>
                 {data.engSection.engWordText}
               </Text>
             </View>
           </View>
-          <View style={layoutStyles.translationMeaningContent}>
+          <View style={LayoutStyles.translationMeaningContent}>
             <TouchableOpacity
-              style={layoutStyles.translationMeaningContent}
+              style={LayoutStyles.translationMeaningContent}
               onPressOut={() => {
                 setIsHidden(!isHidden);
                 setTranslationWordContent(
@@ -107,7 +110,7 @@ function WordScreen({navigation}: any): JSX.Element {
                 );
               }}>
               <View style={styles.trWord}>
-                <Text style={layoutStyles.translationMeaningContentText}>
+                <Text style={LayoutStyles.translationMeaningContentText}>
                   {translationWordContent}
                 </Text>
               </View>
@@ -115,10 +118,10 @@ function WordScreen({navigation}: any): JSX.Element {
           </View>
           <View style={styles.bottomButtoms}>
             <AgainButton
-              style={componentStyles.againButton}
+              style={ComponentStyles.againButton}
               onPressOut={Again}
             />
-            <NextButton style={componentStyles.okayButton} onPressOut={Next} />
+            <NextButton style={ComponentStyles.okayButton} onPressOut={Next} />
           </View>
         </View>
       )}
@@ -126,8 +129,6 @@ function WordScreen({navigation}: any): JSX.Element {
   );
 }
 
-const layoutStyles = require('../styles/layout');
-const componentStyles = require('../styles/component');
 const styles = StyleSheet.create({
   engWord: {},
   trWord: {},

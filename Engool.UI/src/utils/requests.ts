@@ -1,5 +1,5 @@
 import {Word, OnlyWord, Sentence} from '../types';
-import {DbResponseToSentence, DbResponseToWord} from '../maps';
+import {ServerResponseToSentence, ServerResponseToWord} from '../maps';
 import Config from 'react-native-config';
 
 const getWord = async () => {
@@ -38,7 +38,7 @@ const getWordBut = async () => {
   try {
     const response = await fetch(`${Config.SERVICE_LOCAL_URL}/words/single`);
     const json = await response.json();
-    const datas: Word = DbResponseToWord(json);
+    const datas: Word = ServerResponseToWord(json);
 
     return datas;
   } catch (error: any) {
@@ -82,7 +82,7 @@ const allWord = async () => {
     const response = await fetch(`${Config.SERVICE_LOCAL_URL}/words/all`);
     const json = await response.json();
     const datas: Word[] = json.map((j: any) => {
-      return DbResponseToWord(j);
+      return ServerResponseToWord(j);
     });
 
     return datas;
@@ -98,7 +98,7 @@ const getSentence = async () => {
       `${Config.SERVICE_LOCAL_URL}/sentences/single`,
     );
     const json = await response.json();
-    const datas: Sentence = DbResponseToSentence(json);
+    const datas: Sentence = ServerResponseToSentence(json);
 
     return datas;
   } catch (error: any) {

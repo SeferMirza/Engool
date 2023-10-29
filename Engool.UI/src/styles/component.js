@@ -3,7 +3,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-module.exports = StyleSheet.create({
+const ComponentStyles = StyleSheet.create({
   againButton: {
     alignSelf: 'flex-start',
     width: '50%',
@@ -50,3 +50,5 @@ module.exports = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export default ComponentStyles;

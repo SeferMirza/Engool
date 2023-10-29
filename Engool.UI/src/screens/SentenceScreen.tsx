@@ -1,7 +1,3 @@
-/*
-array boş gelince bumluyor o düzeltilecek
-*/
-
 import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
@@ -15,9 +11,17 @@ import NoConnection from '../components/NoConnection';
 import TopBar from '../components/TopBar';
 import Menus from '../components/Menus';
 import {AgainButton, NextButton} from '../components/IconButtons';
-import {getSentence} from '../utils/requests';
+
+// Types
 import {Sentence} from '../types';
+
+// Utils
+import {getSentence} from '../utils/requests';
 import DEFAULTS from '../utils/defaults';
+
+// Styles
+import LayoutStyles from '../styles/layout';
+import ComponentStyles from '../styles/component';
 
 function SentenceScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
@@ -70,24 +74,24 @@ function SentenceScreen({navigation}: any): JSX.Element {
   }
 
   return (
-    <View style={layoutStyles.container}>
+    <View style={LayoutStyles.container}>
       {isLoading ? (
         <ActivityIndicator />
       ) : noConnection && !__DEV__ ? (
         <NoConnection />
       ) : (
-        <View style={layoutStyles.column}>
+        <View style={LayoutStyles.column}>
           <TopBar>
             <Menus navigation={navigation} />
           </TopBar>
-          <View style={layoutStyles.mainContent}>
+          <View style={LayoutStyles.mainContent}>
             <View style={styles.engSentence}>
-              <Text style={layoutStyles.mainContentText}>
+              <Text style={LayoutStyles.mainContentText}>
                 {data.engSection.engSentence}
               </Text>
             </View>
           </View>
-          <View style={layoutStyles.translationMeaningContent}>
+          <View style={LayoutStyles.translationMeaningContent}>
             <View style={styles.trSentence}>
               <TouchableOpacity
                 style={{}}
@@ -99,7 +103,7 @@ function SentenceScreen({navigation}: any): JSX.Element {
                       : data.trSection.trSentence,
                   );
                 }}>
-                <Text style={layoutStyles.translationMeaningContentText}>
+                <Text style={LayoutStyles.translationMeaningContentText}>
                   {translationContent}
                 </Text>
               </TouchableOpacity>
@@ -107,10 +111,10 @@ function SentenceScreen({navigation}: any): JSX.Element {
           </View>
           <View style={styles.bottomButtoms}>
             <AgainButton
-              style={componentStyles.againButton}
+              style={ComponentStyles.againButton}
               onPressOut={Again}
             />
-            <NextButton style={componentStyles.okayButton} onPressOut={Next} />
+            <NextButton style={ComponentStyles.okayButton} onPressOut={Next} />
           </View>
         </View>
       )}
@@ -118,41 +122,12 @@ function SentenceScreen({navigation}: any): JSX.Element {
   );
 }
 
-const layoutStyles = require('../styles/layout');
-const componentStyles = require('../styles/component');
 const styles = StyleSheet.create({
-  engWordBox: {
-    flex: 6,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   hidden: {
     color: '#FFFFFF',
   },
   engSentence: {},
-  engSentenceText: {
-    fontSize: 18,
-  },
-  engWord: {},
-  engWordText: {
-    fontSize: 50,
-    fontWeight: 'bold',
-  },
-  trWordBox: {
-    flex: 3,
-    borderTopWidth: 0.2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   trSentence: {},
-  trSentenceText: {
-    fontSize: 18,
-  },
-  trWord: {},
-  trWordText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
   bottomButtoms: {
     flex: 1,
     flexDirection: 'row',
@@ -173,10 +148,6 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  buttonsText: {
-    fontSize: 20,
-    fontWeight: 'bold',
   },
 });
 
