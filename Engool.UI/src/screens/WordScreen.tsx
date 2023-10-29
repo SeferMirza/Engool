@@ -27,6 +27,10 @@ import ComponentStyles from '../styles/component';
 function WordScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [noConnection, setNoConnection] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
+  const [translationWordContent, setTranslationWordContent] = useState(
+    DEFAULTS.TRANSLATION_TEXT,
+  );
   const [data, setData] = useState<Word>({
     id: '',
     engSection: {
@@ -36,10 +40,6 @@ function WordScreen({navigation}: any): JSX.Element {
       trWordText: '',
     },
   });
-  const [isHidden, setIsHidden] = useState(true);
-  const [translationWordContent, setTranslationWordContent] = useState(
-    DEFAULTS.TRANSLATION_TEXT,
-  );
   const word = useCallback(async () => {
     try {
       setLoading(true);

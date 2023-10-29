@@ -26,6 +26,10 @@ import ComponentStyles from '../styles/component';
 function SentenceScreen({navigation}: any): JSX.Element {
   const [isLoading, setLoading] = useState(true);
   const [noConnection, setNoConnection] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
+  const [translationContent, setTranslationContent] = useState(
+    DEFAULTS.TRANSLATION_TEXT,
+  );
   const [data, setData] = useState<Sentence>({
     id: '',
     engSection: {
@@ -35,10 +39,6 @@ function SentenceScreen({navigation}: any): JSX.Element {
       trSentence: '',
     },
   });
-  const [isHidden, setIsHidden] = useState(true);
-  const [translationContent, setTranslationContent] = useState(
-    DEFAULTS.TRANSLATION_TEXT,
-  );
 
   const sentence = async () => {
     try {
